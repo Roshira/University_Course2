@@ -1,12 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-namespace SpanningTree_NetWork
+public class GraphReader
 {
-	internal class GraphReader
+	public List<Edge> Edges { get; private set; }
+	public int VerticesCount { get; private set; }
+
+	public GraphReader(string filePath)
 	{
+		Edges = new List<Edge>();
+		ReadGraphFromFile(filePath);
+	}
+
+	// Зчитуємо граф з файлу
+	private void ReadGraphFromFile(string filePath)
+	{
+		string[] lines = File.ReadAllLines(filePath);
+		VerticesCount = int.Parse(lines[0]);  // Кількість вершин
+		int edgesCount = int.Parse(lines[1]); // Кількість ребер
+
+		// Зчитуємо всі ребра
+		for (int i = 2; i < lines.Length; i++)
+		{
+			string[] parts = lines[i].Split();
+			int source = int.Parse(parts[0]);
+			int destination = int.Parse(parts[1]);
+			int weight = int.Parse(parts[2]);
+			Edges.Add(new Edge(source, destination, weight));
+		}
 	}
 }

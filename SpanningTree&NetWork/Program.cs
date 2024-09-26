@@ -1,17 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SpanningTree_NetWork
+class Program
 {
-	internal class Program
+	static void Main(string[] args)
 	{
-		static void Main(string[] args)
+		string filePath = "graph.txt";  // Ім'я файлу з графом
+
+		// Створюємо екземпляр класу для зчитування графу
+		GraphReader graphReader = new GraphReader(filePath);
+
+		// Створюємо екземпляр класу для алгоритму Краскала
+		KruskalAlgorithm kruskal = new KruskalAlgorithm();
+
+		// Знаходимо мінімальне кістякове дерево
+		List<Edge> mst = kruskal.FindMST(graphReader.Edges, graphReader.VerticesCount);
+
+		// Виведення результату
+		Console.WriteLine("Мінімальне кістякове дерево:");
+		foreach (Edge edge in mst)
 		{
-			Console.WriteLine("Hello world");
-			Console.WriteLine("Good day");
+			Console.WriteLine($"{edge.Source} - {edge.Destination}: {edge.Weight}");
 		}
 	}
 }
