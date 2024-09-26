@@ -1,0 +1,71 @@
+
+Properties/
+*.sln
+*.csproj
+bin/
+obj/
+*.config
+
+
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Усі пакети NuGet
+*.nupkg
+# Папка з пакетами
+packages/
+# Встановлені залежності
+*.nuget
+
+# Папка для тимчасових файлів
+TestResults/
+*.Cache
+*.log
+*.vspscc
+*.vssscc
+.vscode/
+
+# Інші файли, що створюються при виконанні
+*.dbmdl
+*.jfm
+*.pdb
+*.dll
+*.exe
+
+# Звітність про покриття коду
+coverage/
+
+# Конфігурації для публікації
+publish/
+
+# Логи
+*.log
+*.tlog
+*.log2
+
+# Підключення до Сloud, Docker
+*.Dockerfile
+Dockerfile.*
+.env
+.dockerignore
+
+# Інші специфічні файли
+localhistory/
+*.DS_Store
+*.lock.json
