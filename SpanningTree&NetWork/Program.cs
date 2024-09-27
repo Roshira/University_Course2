@@ -8,10 +8,10 @@ class Program
 {
 	static void Main(string[] args)
 	{
-		string filePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";  // Ім'я файлу з графом
-
+		string filePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";
+		string filePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\ForMST.txt";
 		// Створюємо екземпляр класу для зчитування графу
-		
+
 		string click = " <---";
 
 		int temp = 1;  // Стартова позиція в меню
@@ -22,10 +22,10 @@ class Program
 			Console.Clear();  // Очищуємо консоль перед виведенням меню
 
 			// Меню
-			string printGraph = "1. Print MST";
+			string printGraph = "1. Print and create MST";
 			string addEdge = "2. Add the edge or vertex";
 			string addVertex = "3. Delete the Edge";
-			string deleteEdge = "4. Not realized";
+			string deleteEdge = "4. Creat image graphs";
 			string deleteVertex = "5. Not realized";
 			string exit = "6. Exit";
 
@@ -89,9 +89,25 @@ class Program
 						// Знаходимо мінімальне кістякове дерево
 						List<Edge> mst = kruskal.FindMST(graphReader.Edges, graphReader.VerticesCount);
 						Console.WriteLine("MST:");
+						int edgeTemp = 0;
 						foreach (Edge edge in mst)
 						{
 							Console.WriteLine($"{edge.Source} - {edge.Destination}: {edge.Weight}");
+							edgeTemp++;
+						}
+						string[] lines = File.ReadAllLines(filePath);
+
+						string[] firstLine = lines[0].Split();
+						int vertices = int.Parse(firstLine[0]);
+						using (StreamWriter writer = new StreamWriter(filePathMST))
+						{
+							writer.WriteLine($"{vertices} {edgeTemp}");
+							foreach (Edge edge in mst)
+							{
+								
+								writer.WriteLine($"{edge.Source} {edge.Destination} {edge.Weight}");
+							}
+
 						}
 						Console.WriteLine("\nPress any key to go back");
 						Console.ReadKey();
@@ -111,6 +127,12 @@ class Program
 						GraphVisualizer graphVisualizer = new GraphVisualizer(inputFilePath, outputFilePath);
 
 						graphVisualizer.GenerateGraphImage();
+
+						string inputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\ForMST.txt";
+						string outputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\GraphMST.png";
+						GraphVisualizer graphVisualizerMST = new GraphVisualizer(inputFilePathMST, outputFilePathMST);
+
+						graphVisualizerMST.GenerateGraphImage();
 						break;
 					case 5:
 
