@@ -16,9 +16,12 @@ public class GraphReader
 	// Зчитуємо граф з файлу
 	private void ReadGraphFromFile(string filePath)
 	{
+
+
 		string[] lines = File.ReadAllLines(filePath);
-		VerticesCount = int.Parse(lines[0]);  // Кількість вершин
-		int edgesCount = int.Parse(lines[1]); // Кількість ребер
+		string[] firstLine = lines[0].Split();
+		VerticesCount = int.Parse(firstLine[0]);  // Кількість вершин
+		int edgesCount = int.Parse(firstLine[1]); // Кількість ребер
 
 		// Зчитуємо всі ребра
 		for (int i = 2; i < lines.Length; i++)
