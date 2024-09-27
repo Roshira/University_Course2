@@ -7,44 +7,38 @@ using System.Threading.Tasks;
 
 namespace SpanningTree_NetWork
 {
-	internal class AddVertexOREdgeGraph
+	internal class GraphModifier
 	{
 		private string filePath;
 
-		public AddVertexOREdgeGraph(string filePath)
+		public GraphModifier(string filePath)
 		{
 			this.filePath = filePath;
 		}
-		public void WritingVertexOREdge()
+
+		internal void AddEdgeStart()
 		{
-			Console.WriteLine("Writing one, two vertex and weight to add edge");
-			Console.Write("One vertex: ");
-			if (!int.TryParse(Console.ReadLine(), out int OneVertex))
-			{
-				Console.WriteLine("Invalid input for one vertex. Exiting method.");
-				Console.ReadLine();
-				return;
-			}
-
-			Console.Write("Two vertex: ");
-			if (!int.TryParse(Console.ReadLine(), out int TwoVertex))
-			{
-				Console.WriteLine("Invalid input for two vertex. Exiting method.");
-				Console.ReadLine();
-				return;
-			}
-
-			Console.Write("Weight: ");
-			if (!int.TryParse(Console.ReadLine(), out int Weight))
-			{
-				Console.WriteLine("Invalid input for weight. Exiting method.");
-				Console.ReadLine();
-				return;
-			}
-			AddEdge(OneVertex, TwoVertex, Weight);
+			AddEdge();
 		}
-		private void AddEdge(int u, int v, int w)
+
+		private void AddEdge()
 		{
+			int u, v, w;
+			int[] date = new int[3];
+		    GetElementGraph getElementGraph = new GetElementGraph();
+			date = getElementGraph.WritingVertexOREdge();
+			if(date == null)
+			{
+				Console.WriteLine("You dont writing correct date");
+				Console.ReadKey();
+				return;
+			}
+			else
+			{
+				u = date[0];
+				v = date[1];
+				w = date[2];
+			}
 			if (u == v || w == 0)
 				return;
 			// Читання всіх рядків з файлу

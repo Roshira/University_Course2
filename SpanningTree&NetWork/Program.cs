@@ -23,10 +23,10 @@ class Program
 
 			// Меню
 			string printGraph = "1. Print MST";
-			string addEdge = "2. Add the Edge";
-			string addVertex = "3. Add vertex";
-			string deleteEdge = "4. Delete the Edge";
-			string deleteVertex = "5. Delete vertex";
+			string addEdge = "2. Add the edge or vertex";
+			string addVertex = "3. Delete the Edge";
+			string deleteEdge = "4. Not realized";
+			string deleteVertex = "Not realized";
 			string exit = "6. Exit";
 
 			// Логіка управління меню
@@ -97,10 +97,11 @@ class Program
 						Console.ReadKey();
 						break;
 					case 2:
-						AddVertexOREdgeGraph modifier = new AddVertexOREdgeGraph(filePath);
-						modifier.WritingVertexOREdge();
+						GraphModifier modifier = new GraphModifier(filePath);
+						modifier.AddEdgeStart();
 						break;
 					case 3:
+
 						break;
 					case 4:
 
