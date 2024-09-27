@@ -16,12 +16,12 @@ namespace SpanningTree_NetWork
 			this.filePath = filePath;
 		}
 
-		internal void AddEdgeStart()
+		internal void AddStart()
 		{
-			AddEdge();
+			Add();
 		}
 
-		private void AddEdge()
+		private void Add()
 		{
 			int u, v, w;
 			int[] date = new int[3];

@@ -5,6 +5,7 @@ Properties/
 bin/
 obj/
 *.config
+*.png
 
 
 .vs/

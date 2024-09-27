@@ -11,7 +11,7 @@ namespace SpanningTree_NetWork
 		public int[] WritingVertexOREdge()
 		{
 			int[] ints = new int[3];
-			Console.WriteLine("Writing one, two vertex and weight to add edge");
+			Console.WriteLine("Writing one, two vertex and weight");
 			Console.Write("One vertex: ");
 			if (!int.TryParse(Console.ReadLine(), out ints[0]))
 			{

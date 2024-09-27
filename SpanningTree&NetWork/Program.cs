@@ -26,7 +26,7 @@ class Program
 			string addEdge = "2. Add the edge or vertex";
 			string addVertex = "3. Delete the Edge";
 			string deleteEdge = "4. Not realized";
-			string deleteVertex = "Not realized";
+			string deleteVertex = "5. Not realized";
 			string exit = "6. Exit";
 
 			// Логіка управління меню
@@ -98,19 +98,25 @@ class Program
 						break;
 					case 2:
 						GraphModifier modifier = new GraphModifier(filePath);
-						modifier.AddEdgeStart();
+						modifier.AddStart();
 						break;
 					case 3:
-
+						DeletePartGraph deletePartGraph = new DeletePartGraph(filePath);
+						deletePartGraph.startDelete();
+						
 						break;
 					case 4:
+						string inputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";
+						string outputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\graph.png";
+						GraphVisualizer graphVisualizer = new GraphVisualizer(inputFilePath, outputFilePath);
 
+						graphVisualizer.GenerateGraphImage();
 						break;
 					case 5:
 
 						break;
 					case 6:
-						running = false;  // Завершення програми
+						running = false; 
 						break;
 				}
 			}
