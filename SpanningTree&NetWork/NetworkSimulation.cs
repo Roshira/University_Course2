@@ -7,15 +7,27 @@ using System.Threading.Tasks;
 
 namespace SpanningTree_NetWork
 {
+	/// <summary>
+	/// Represents a network simulation for managing a graph and simulating data transfer.
+	/// </summary>
 	public class NetworkSimulation
 	{
-		private Dictionary<int, List<Edge>> graph = new Dictionary<int, List<Edge>>();  // Список суміжності для графа
-		private int numVertices;  // Кількість вершин
+		private Dictionary<int, List<Edge>> graph = new Dictionary<int, List<Edge>>();  // Adjacency list for the graph
+		private int numVertices;  // Number of vertices in the graph
 
-		// Структура для представлення ребра
+		/// <summary>
+		/// Represents an edge in the graph with a target vertex and weight.
+		/// </summary>
 		public class Edge
 		{
-			public int Vertex, Weight;
+			public int Vertex { get; }
+			public int Weight { get; }
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Edge"/> class.
+			/// </summary>
+			/// <param name="vertex">The target vertex of the edge.</param>
+			/// <param name="weight">The weight of the edge.</param>
 			public Edge(int vertex, int weight)
 			{
 				Vertex = vertex;
@@ -23,16 +35,19 @@ namespace SpanningTree_NetWork
 			}
 		}
 
-		// Читаємо мінімальне кістякове дерево з файлу
+		/// <summary>
+		/// Reads a minimum spanning tree from a file and initializes the graph.
+		/// </summary>
+		/// <param name="filename">The name of the file containing the graph data.</param>
 		public void ReadGraphFromFile(string filename)
 		{
 			var lines = File.ReadAllLines(filename);
 
-			// Обробка першого рядка з кількістю вершин і ребер
+			// Process the first line containing the number of vertices and edges
 			var firstLine = lines[0].Split();
-			numVertices = int.Parse(firstLine[0]);  // Читаємо кількість вершин
+			numVertices = int.Parse(firstLine[0]);  // Read the number of vertices
 
-			// Читаємо всі ребра
+			// Read all edges from the file
 			for (int i = 1; i < lines.Length; i++)
 			{
 				var parts = lines[i].Split();
@@ -46,18 +61,22 @@ namespace SpanningTree_NetWork
 					graph[v2] = new List<Edge>();
 
 				graph[v1].Add(new Edge(v2, weight));
-				graph[v2].Add(new Edge(v1, weight));  // Оскільки граф неорієнтований
+				graph[v2].Add(new Edge(v1, weight));  // Since the graph is undirected
 			}
 		}
 
-		// Алгоритм Дейкстри для пошуку найкоротшого шляху від однієї вершини до всіх інших
+		/// <summary>
+		/// Implements Dijkstra's algorithm to find the shortest path from a starting vertex to all other vertices.
+		/// </summary>
+		/// <param name="start">The starting vertex.</param>
+		/// <returns>A dictionary with the shortest distances from the starting vertex to all other vertices.</returns>
 		public Dictionary<int, int> Dijkstra(int start)
 		{
 			var distances = new Dictionary<int, int>();
 			var priorityQueue = new SortedSet<(int, int)>();  // (distance, vertex)
 			var visited = new HashSet<int>();
 
-			// Ініціалізуємо всі вершини нескінченними відстанями
+			// Initialize all vertices with infinite distances
 			for (int i = 0; i < numVertices; i++)
 			{
 				distances[i] = int.MaxValue;
@@ -68,7 +87,7 @@ namespace SpanningTree_NetWork
 
 			while (priorityQueue.Count > 0)
 			{
-				// Вибираємо вузол з мінімальною відстанню
+				// Select the vertex with the minimum distance
 				var current = priorityQueue.First();
 				priorityQueue.Remove(current);
 
@@ -78,7 +97,7 @@ namespace SpanningTree_NetWork
 
 				visited.Add(currentVertex);
 
-				// Оновлюємо відстані до сусідніх вершин
+				// Update distances to neighboring vertices
 				foreach (var edge in graph[currentVertex])
 				{
 					int neighbor = edge.Vertex;
@@ -92,23 +111,26 @@ namespace SpanningTree_NetWork
 				}
 			}
 
-			return distances;  // Повертаємо відстані від стартової вершини до всіх інших
+			return distances;  // Return the distances from the start vertex to all others
 		}
 
-		// Моделювання передачі даних між вузлами
+		/// <summary>
+		/// Simulates data transfer between nodes in the network.
+		/// </summary>
+		/// <param name="source">The source vertex for data transfer.</param>
+		/// <param name="destination">The destination vertex for data transfer.</param>
 		public void SimulateDataTransfer(int source, int destination)
 		{
 			var distances = Dijkstra(source);
 			if (distances[destination] == int.MaxValue)
 			{
-				Console.WriteLine($"Немає шляху між {source} та {destination}");
+				Console.WriteLine($"There is no path between {source} and {destination}");
 			}
 			else
 			{
-				Console.WriteLine($"Найкоротший шлях між {source} та {destination}: {distances[destination]}");
-				// У цьому місці можна додати моделювання передачі даних (наприклад, візуалізацію або логіку передачі).
+				Console.WriteLine($"The shortest path between {source} and {destination}: {distances[destination]}");
+				// Here, additional data transfer simulation logic can be added (e.g., visualization or transfer logic).
 			}
 		}
 	}
-
 }

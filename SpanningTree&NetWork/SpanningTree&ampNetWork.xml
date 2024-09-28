@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpanningTree&NetWork</name>
+    </assembly>
+    <members>
+        <member name="T:SpanningTree_NetWork.NetworkSimulation">
+            <summary>
+            Represents a network simulation for managing a graph and simulating data transfer.
+            </summary>
+        </member>
+        <member name="T:SpanningTree_NetWork.NetworkSimulation.Edge">
+            <summary>
+            Represents an edge in the graph with a target vertex and weight.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.NetworkSimulation.Edge.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpanningTree_NetWork.NetworkSimulation.Edge"/> class.
+            </summary>
+            <param name="vertex">The target vertex of the edge.</param>
+            <param name="weight">The weight of the edge.</param>
+        </member>
+        <member name="M:SpanningTree_NetWork.NetworkSimulation.ReadGraphFromFile(System.String)">
+            <summary>
+            Reads a minimum spanning tree from a file and initializes the graph.
+            </summary>
+            <param name="filename">The name of the file containing the graph data.</param>
+        </member>
+        <member name="M:SpanningTree_NetWork.NetworkSimulation.Dijkstra(System.Int32)">
+            <summary>
+            Implements Dijkstra's algorithm to find the shortest path from a starting vertex to all other vertices.
+            </summary>
+            <param name="start">The starting vertex.</param>
+            <returns>A dictionary with the shortest distances from the starting vertex to all other vertices.</returns>
+        </member>
+        <member name="M:SpanningTree_NetWork.NetworkSimulation.SimulateDataTransfer(System.Int32,System.Int32)">
+            <summary>
+            Simulates data transfer between nodes in the network.
+            </summary>
+            <param name="source">The source vertex for data transfer.</param>
+            <param name="destination">The destination vertex for data transfer.</param>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Main class for the program that provides a user interface for interacting with graph data.
+            </summary>
+        </member>
+        <member name="M:Program.Main(System.String[])">
+            <summary>
+            The entry point of the program.
+            </summary>
+            <param name="args">Command-line arguments (not used).</param>
+        </member>
+    </members>
+</doc>

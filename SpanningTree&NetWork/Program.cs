@@ -4,32 +4,39 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+/// <summary>
+/// Main class for the program that provides a user interface for interacting with graph data.
+/// </summary>
 class Program
 {
+	/// <summary>
+	/// The entry point of the program.
+	/// </summary>
+	/// <param name="args">Command-line arguments (not used).</param>
 	static void Main(string[] args)
 	{
 		string filePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";
 		string filePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\ForMST.txt";
-		// Створюємо екземпляр класу для зчитування графу
+		// Create an instance of the class for reading the graph
 
 		string click = " <---";
 
-		int temp = 1;  // Стартова позиція в меню
-		bool running = true;  // Флаг для контролю циклу
+		int temp = 1;  // Starting position in the menu
+		bool running = true;  // Flag for controlling the loop
 
 		while (running)
 		{
-			Console.Clear();  // Очищуємо консоль перед виведенням меню
+			Console.Clear();  // Clear the console before displaying the menu
 
-			// Меню
+			// Menu options
 			string printGraph = "1. Print and create MST";
 			string addEdge = "2. Add the edge or vertex";
-			string addVertex = "3. Delete the Edge";
-			string deleteEdge = "4. Creat image graphs";
-			string deleteVertex = "5. Not realized";
+			string deleteEdge = "3. Delete the Edge";
+			string createImage = "4. Create image graphs";
+			string simulateNetwork = "5. Simulate network way";
 			string exit = "6. Exit";
 
-			// Логіка управління меню
+			// Menu control logic
 			switch (temp)
 			{
 				case 1:
@@ -39,39 +46,38 @@ class Program
 					addEdge += click;
 					break;
 				case 3:
-					addVertex += click;
-					break;
-				case 4:
 					deleteEdge += click;
 					break;
+				case 4:
+					createImage += click;
+					break;
 				case 5:
-					deleteVertex += click;
+					simulateNetwork += click;
 					break;
 				case 6:
 					exit += click;
 					break;
 			}
 
-			// Виведення меню
+			// Display the menu
 			Console.WriteLine(printGraph);
 			Console.WriteLine(addEdge);
-			Console.WriteLine(addVertex);
 			Console.WriteLine(deleteEdge);
-			Console.WriteLine(deleteVertex);
+			Console.WriteLine(createImage);
+			Console.WriteLine(simulateNetwork);
 			Console.WriteLine(exit);
 
-
-			// Зчитування натискання клавіш
+			// Reading key presses
 			ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 			if (keyInfo.Key == ConsoleKey.S)
 			{
 				temp++;
-				if (temp > 6) temp = 1;  // Переходить на перший пункт, якщо перевищує кількість пунктів
+				if (temp > 6) temp = 1;  // Move to the first option if exceeding the number of options
 			}
 			else if (keyInfo.Key == ConsoleKey.W)
 			{
 				temp--;
-				if (temp < 1) temp = 6;  // Переходить на останній пункт, якщо йде вгору за перший
+				if (temp < 1) temp = 6;  // Move to the last option if going up past the first
 			}
 
 			else if (keyInfo.Key == ConsoleKey.Enter)
@@ -80,13 +86,13 @@ class Program
 				switch (temp)
 				{
 					case 1:
-
+						// Create an instance of GraphReader to read the graph
 						GraphReader graphReader = new GraphReader(filePath);
 
-						// Створюємо екземпляр класу для алгоритму Краскала
+						// Create an instance of KruskalAlgorithm
 						KruskalAlgorithm kruskal = new KruskalAlgorithm();
 
-						// Знаходимо мінімальне кістякове дерево
+						// Find the minimum spanning tree (MST)
 						List<Edge> mst = kruskal.FindMST(graphReader.Edges, graphReader.VerticesCount);
 						Console.WriteLine("MST:");
 						int edgeTemp = 0;
@@ -95,8 +101,9 @@ class Program
 							Console.WriteLine($"{edge.Source} - {edge.Destination}: {edge.Weight}");
 							edgeTemp++;
 						}
-						string[] lines = File.ReadAllLines(filePath);
 
+						// Write the MST to a file
+						string[] lines = File.ReadAllLines(filePath);
 						string[] firstLine = lines[0].Split();
 						int vertices = int.Parse(firstLine[0]);
 						using (StreamWriter writer = new StreamWriter(filePathMST))
@@ -104,53 +111,61 @@ class Program
 							writer.WriteLine($"{vertices} {edgeTemp}");
 							foreach (Edge edge in mst)
 							{
-								
 								writer.WriteLine($"{edge.Source} {edge.Destination} {edge.Weight}");
 							}
-
 						}
 						Console.WriteLine("\nPress any key to go back");
 						Console.ReadKey();
 						break;
+
 					case 2:
+						// Modify the graph by adding an edge or vertex
 						GraphModifier modifier = new GraphModifier(filePath);
 						modifier.AddStart();
 						break;
+
 					case 3:
+						// Delete an edge from the graph
 						DeletePartGraph deletePartGraph = new DeletePartGraph(filePath);
 						deletePartGraph.startDelete();
-						
 						break;
+
 					case 4:
+						// Generate images of the graphs
 						string outputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\graph.png";
 						GraphVisualizer graphVisualizer = new GraphVisualizer(filePath, outputFilePath);
-
 						graphVisualizer.GenerateGraphImage();
+
 						string outputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\GraphMST.png";
 						GraphVisualizer graphVisualizerMST = new GraphVisualizer(filePathMST, outputFilePathMST);
-
 						graphVisualizerMST.GenerateGraphImage();
 						break;
-					case 5:
-						NetworkSimulation network = new NetworkSimulation();
-						network.ReadGraphFromFile(filePathMST);  // Читаємо граф з файлу
 
-						Console.WriteLine("Writing start vertices:");
+					case 5:
+						// Simulate network data transfer
+						NetworkSimulation network = new NetworkSimulation();
+						network.ReadGraphFromFile(filePathMST);  // Read the graph from the file
+
+						Console.WriteLine("Enter starting vertex:");
 						int start = int.Parse(Console.ReadLine());
-						Console.WriteLine("Writing end vertices:");
+						Console.WriteLine("Enter ending vertex:");
 						int end = int.Parse(Console.ReadLine());
 
-						// Моделюємо передачу даних між двома вузлами
+						// Simulate data transfer between two nodes
 						network.SimulateDataTransfer(start, end);
 						Console.ReadKey();
 						break;
+
 					case 6:
-						running = false; 
+						// Exit the program
+						running = false;
 						break;
 				}
 			}
 		}
 		Console.Clear();
-		Console.WriteLine("Програма завершена.");
+		Console.WriteLine("Program terminated.");
 	}
+
 }
+
