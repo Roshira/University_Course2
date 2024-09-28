@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpanningTree_NetWork
 {
+	/// <summary>
+	/// Class reader date that users send for program
+	/// </summary>
 	internal class GetElementGraph
 	{
 		public int[] WritingVertexOREdge()

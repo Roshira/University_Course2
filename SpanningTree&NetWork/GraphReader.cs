@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+/// <summary>
+/// This is class for reading date with .txt file for KruskalAlgoritm
+/// </summary>
 public class GraphReader
 {
+	
 	public List<Edge> Edges { get; private set; }
 	public int VerticesCount { get; private set; }
 
@@ -13,17 +16,15 @@ public class GraphReader
 		ReadGraphFromFile(filePath);
 	}
 
-	// Зчитуємо граф з файлу
 	private void ReadGraphFromFile(string filePath)
 	{
 
 
 		string[] lines = File.ReadAllLines(filePath);
 		string[] firstLine = lines[0].Split();
-		VerticesCount = int.Parse(firstLine[0]);  // Кількість вершин
-		int edgesCount = int.Parse(firstLine[1]); // Кількість ребер
+		VerticesCount = int.Parse(firstLine[0]); // number vertex
+		int edgesCount = int.Parse(firstLine[1]); // number edge
 
-		// Зчитуємо всі ребра
 		for (int i = 2; i < lines.Length; i++)
 		{
 			string[] parts = lines[i].Split();

@@ -4,6 +4,70 @@
         <name>SpanningTree&NetWork</name>
     </assembly>
     <members>
+        <member name="T:SpanningTree_NetWork.DeletePartGraph">
+            <summary>
+            Class for deleting an edge from the graph stored in a file.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.DeletePartGraph.#ctor(System.String)">
+            <summary>
+            Constructor to initialize the file path.
+            </summary>
+            <param name="filePath">Path to the graph data file.</param>
+        </member>
+        <member name="M:SpanningTree_NetWork.DeletePartGraph.startDelete">
+            <summary>
+            Public method to start the deletion process.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.DeletePartGraph.Delete">
+            <summary>
+            Private method that handles the logic for deleting an edge from the graph.
+            </summary>
+        </member>
+        <member name="T:SpanningTree_NetWork.GetElementGraph">
+            <summary>
+            Class reader date that users send for program
+            </summary>
+        </member>
+        <member name="T:SpanningTree_NetWork.GraphModifier">
+            <summary>
+            Class for modifying graph data stored in a file.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.GraphModifier.#ctor(System.String)">
+            <summary>
+            Constructor to initialize the file path.
+            </summary>
+            <param name="filePath">Path to the graph data file.</param>
+        </member>
+        <member name="M:SpanningTree_NetWork.GraphModifier.AddStart">
+            <summary>
+            Public method to initiate the addition of a new edge.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.GraphModifier.Add">
+            <summary>
+            Private method that handles the logic for adding a new edge to the graph.
+            </summary>
+        </member>
+        <member name="T:SpanningTree_NetWork.GraphVisualizer">
+            <summary>
+            Class for visualizing a graph by generating an image from a .dot file using Graphviz.
+            </summary>
+        </member>
+        <member name="M:SpanningTree_NetWork.GraphVisualizer.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the GraphVisualizer class.
+            </summary>
+            <param name="inputFilePath">The file path to read the graph data from.</param>
+            <param name="outputFilePath">The file path to save the generated graph image.</param>
+        </member>
+        <member name="M:SpanningTree_NetWork.GraphVisualizer.GenerateGraphImage">
+            <summary>
+            Generates a graph image based on the data from the input file.
+            </summary>
+        </member>
         <member name="T:SpanningTree_NetWork.NetworkSimulation">
             <summary>
             Represents a network simulation for managing a graph and simulating data transfer.
@@ -40,6 +104,62 @@
             </summary>
             <param name="source">The source vertex for data transfer.</param>
             <param name="destination">The destination vertex for data transfer.</param>
+        </member>
+        <member name="T:GraphReader">
+            <summary>
+            This is class for reading date with .txt file for KruskalAlgoritm
+            </summary>
+        </member>
+        <member name="T:KruskalAlgorithm">
+            <summary>
+            Implements Kruskal's algorithm to find the Minimum Spanning Tree (MST) of a graph.
+            </summary>
+        </member>
+        <member name="M:KruskalAlgorithm.FindMST(System.Collections.Generic.List{Edge},System.Int32)">
+            <summary>
+            Finds the Minimum Spanning Tree from the given edges and vertex count.
+            </summary>
+            <param name="edges">A list of edges in the graph.</param>
+            <param name="verticesCount">The total number of vertices in the graph.</param>
+            <returns>A list of edges that form the MST.</returns>
+        </member>
+        <member name="M:KruskalAlgorithm.Find(System.Int32[],System.Int32)">
+            <summary>
+            Finds the root of the set containing the specified vertex.
+            </summary>
+            <param name="parent">Array representing the parent of each vertex.</param>
+            <param name="i">The vertex to find the root for.</param>
+            <returns>The root of the set.</returns>
+        </member>
+        <member name="M:KruskalAlgorithm.Union(System.Int32[],System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Unites two sets by linking their roots.
+            </summary>
+            <param name="parent">Array representing the parent of each vertex.</param>
+            <param name="rank">Array representing the rank of each vertex.</param>
+            <param name="x">The root of the first set.</param>
+            <param name="y">The root of the second set.</param>
+        </member>
+        <member name="T:Edge">
+            <summary>
+            Represents an edge in the graph with a source, destination, and weight.
+            Implements IComparable for sorting edges by weight.
+            </summary>
+        </member>
+        <member name="M:Edge.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new edge with the specified source, destination, and weight.
+            </summary>
+            <param name="source">The starting vertex of the edge.</param>
+            <param name="destination">The ending vertex of the edge.</param>
+            <param name="weight">The weight of the edge.</param>
+        </member>
+        <member name="M:Edge.CompareTo(Edge)">
+            <summary>
+            Compares this edge with another edge based on their weights.
+            </summary>
+            <param name="other">The other edge to compare with.</param>
+            <returns>A comparison value indicating the order of the edges.</returns>
         </member>
         <member name="T:Program">
             <summary>

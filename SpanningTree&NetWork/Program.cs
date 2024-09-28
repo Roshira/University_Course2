@@ -101,8 +101,6 @@ class Program
 							Console.WriteLine($"{edge.Source} - {edge.Destination}: {edge.Weight}");
 							edgeTemp++;
 						}
-
-						// Write the MST to a file
 						string[] lines = File.ReadAllLines(filePath);
 						string[] firstLine = lines[0].Split();
 						int vertices = int.Parse(firstLine[0]);
@@ -111,10 +109,11 @@ class Program
 							writer.WriteLine($"{vertices} {edgeTemp}");
 							foreach (Edge edge in mst)
 							{
+
 								writer.WriteLine($"{edge.Source} {edge.Destination} {edge.Weight}");
 							}
 						}
-						Console.WriteLine("\nPress any key to go back");
+							Console.WriteLine("\nPress any key to go back");
 						Console.ReadKey();
 						break;
 
@@ -168,4 +167,3 @@ class Program
 	}
 
 }
-
