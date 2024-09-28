@@ -122,20 +122,27 @@ class Program
 						
 						break;
 					case 4:
-						string inputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";
 						string outputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\graph.png";
-						GraphVisualizer graphVisualizer = new GraphVisualizer(inputFilePath, outputFilePath);
+						GraphVisualizer graphVisualizer = new GraphVisualizer(filePath, outputFilePath);
 
 						graphVisualizer.GenerateGraphImage();
-
-						string inputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\ForMST.txt";
 						string outputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\GraphMST.png";
-						GraphVisualizer graphVisualizerMST = new GraphVisualizer(inputFilePathMST, outputFilePathMST);
+						GraphVisualizer graphVisualizerMST = new GraphVisualizer(filePathMST, outputFilePathMST);
 
 						graphVisualizerMST.GenerateGraphImage();
 						break;
 					case 5:
+						NetworkSimulation network = new NetworkSimulation();
+						network.ReadGraphFromFile(filePathMST);  // Читаємо граф з файлу
 
+						Console.WriteLine("Writing start vertices:");
+						int start = int.Parse(Console.ReadLine());
+						Console.WriteLine("Writing end vertices:");
+						int end = int.Parse(Console.ReadLine());
+
+						// Моделюємо передачу даних між двома вузлами
+						network.SimulateDataTransfer(start, end);
+						Console.ReadKey();
 						break;
 					case 6:
 						running = false; 
