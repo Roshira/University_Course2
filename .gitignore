@@ -6,6 +6,8 @@ bin/
 obj/
 *.config
 *.png
+!graph.png
+!GraphMST.png
 
 
 .vs/
