@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 
 [TestFixture]
-public class GraphReaderTests
+public class GraphTest
 {
 	[Test]
 	public void TestKruskalAlgorithm()
