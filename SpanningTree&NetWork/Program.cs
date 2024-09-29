@@ -15,8 +15,8 @@ class Program
 	/// <param name="args">Command-line arguments (not used).</param>
 	static void Main(string[] args)
 	{
-		string filePath = "C:\\University_Course2\\SpanningTree&NetWork\\Graph.txt";
-		string filePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\ForMST.txt";
+		string filePath = "C:\\University_Course2\\SpanningTree&NetWork\\FilesWithDate\\Graph.txt";
+		string filePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\FilesWithDate\\ForMST.txt";
 		// Create an instance of the class for reading the graph
 
 		string click = " <---";
@@ -96,8 +96,9 @@ class Program
 						List<Edge> mst = kruskal.FindMST(graphReader.Edges, graphReader.VerticesCount);
 						Console.WriteLine("MST:");
 						int edgeTemp = 0;
-						foreach (Edge edge in mst)
+						for (int i = 0; i < mst.Count; i++)
 						{
+							Edge edge = mst[i];
 							Console.WriteLine($"{edge.Source} - {edge.Destination}: {edge.Weight}");
 							edgeTemp++;
 						}
@@ -131,11 +132,11 @@ class Program
 
 					case 4:
 						// Generate images of the graphs
-						string outputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\graph.png";
+						string outputFilePath = "C:\\University_Course2\\SpanningTree&NetWork\\FolderWithImageGraph\\graph.png";
 						GraphVisualizer graphVisualizer = new GraphVisualizer(filePath, outputFilePath);
 						graphVisualizer.GenerateGraphImage();
 
-						string outputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\GraphMST.png";
+						string outputFilePathMST = "C:\\University_Course2\\SpanningTree&NetWork\\FolderWithImageGraph\\GraphMST.png";
 						GraphVisualizer graphVisualizerMST = new GraphVisualizer(filePathMST, outputFilePathMST);
 						graphVisualizerMST.GenerateGraphImage();
 						break;
@@ -152,6 +153,7 @@ class Program
 
 						// Simulate data transfer between two nodes
 						network.SimulateDataTransfer(start, end);
+
 						Console.ReadKey();
 						break;
 

@@ -11,7 +11,7 @@ namespace SpanningTree_NetWork
 	/// <summary>
 	/// Class for deleting an edge from the graph stored in a file.
 	/// </summary>
-	internal class DeletePartGraph
+	public class DeletePartGraph
 	{
 		private string filePath; // Path to the graph data file
 
@@ -29,20 +29,20 @@ namespace SpanningTree_NetWork
 		/// </summary>
 		public void startDelete()
 		{
-			Delete(); // Calls the private delete method
+			int[] date = new int[3]; // Array to hold input data for the edge
+			GetElementGraph getElementGraph = new GetElementGraph(); // Instance to get user input
+			date = getElementGraph.WritingVertexOREdge();
+			Delete(date); // Calls the private delete method
 		}
 
 		/// <summary>
 		/// Private method that handles the logic for deleting an edge from the graph.
 		/// </summary>
-		private void Delete()
+		private void Delete(int[] date)
 		{
 			int u, v, w; // Variables for the edge to be deleted
-			int[] date = new int[3]; // Array to hold input data for the edge
-			GetElementGraph getElementGraph = new GetElementGraph(); // Instance to get user input
 
 			// Get user input for edge details
-			date = getElementGraph.WritingVertexOREdge();
 			if (date == null) // Validate input
 			{
 				Console.WriteLine("You dont writing correct date"); // Error for invalid input

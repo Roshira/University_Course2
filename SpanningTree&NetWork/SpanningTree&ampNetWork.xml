@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SpanningTree&NetWork</name>
+        <name>SpanningTree_NetWork</name>
     </assembly>
     <members>
         <member name="T:SpanningTree_NetWork.DeletePartGraph">
@@ -20,7 +20,7 @@
             Public method to start the deletion process.
             </summary>
         </member>
-        <member name="M:SpanningTree_NetWork.DeletePartGraph.Delete">
+        <member name="M:SpanningTree_NetWork.DeletePartGraph.Delete(System.Int32[])">
             <summary>
             Private method that handles the logic for deleting an edge from the graph.
             </summary>

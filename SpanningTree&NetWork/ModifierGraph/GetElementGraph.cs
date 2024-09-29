@@ -9,9 +9,9 @@ namespace SpanningTree_NetWork
 	/// <summary>
 	/// Class reader date that users send for program
 	/// </summary>
-	internal class GetElementGraph
+	public class GetElementGraph
 	{
-		public int[] WritingVertexOREdge()
+		public virtual int[] WritingVertexOREdge()
 		{
 			int[] ints = new int[3];
 			Console.WriteLine("Writing one, two vertex and weight");
