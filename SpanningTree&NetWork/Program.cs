@@ -148,11 +148,13 @@ class Program
 
 						Console.WriteLine("Enter starting vertex:");
 						int start = int.Parse(Console.ReadLine());
+						Console.WriteLine("Enter weight date:");
+						int weight = int.Parse(Console.ReadLine());
 						Console.WriteLine("Enter ending vertex:");
 						int end = int.Parse(Console.ReadLine());
 
 						// Simulate data transfer between two nodes
-						network.SimulateDataTransfer(start, end);
+						network.SimulateDataTransfer(start, end,weight);
 
 						Console.ReadKey();
 						break;
