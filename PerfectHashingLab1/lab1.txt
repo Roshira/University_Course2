@@ -1,0 +1,115 @@
+var words = new List<string> { "apple", "banana", "cherry", "date", "fig", "grape" };
+
+var table = new PerfectHashTable(words);
+table.Print();
+
+Console.WriteLine("\nChecking for the presence of words:");
+Console.WriteLine($"banana → {table.Contains("banana")}");
+Console.WriteLine($"mango → {table.Contains("mango")}");
+
+public class PerfectHashTable
+{
+    private class SecondaryTable
+    {
+        public string[] Table;
+        public Func<string, int> HashFunction;
+
+        public SecondaryTable(List<string> keys)
+        {
+            int m = keys.Count * keys.Count; // квадрат кількості елементів
+            Table = new string[m];
+
+            Random rnd = new Random();
+            bool success = false;
+
+            while (!success)
+            {
+                success = true;
+                Table = new string[m];
+                int a = rnd.Next(1, 1000);
+                int b = rnd.Next(0, 1000);
+                int p = 10000019;
+
+                HashFunction = s => Math.Abs(((a * s.GetHashCode() + b) % p) % m);
+
+                foreach (var key in keys)
+                {
+                    int index = HashFunction(key);
+                    if (Table[index] != null)
+                    {
+                        success = false;
+                        break; // колізія, потрібно згенерувати нову функцію
+                    }
+                    Table[index] = key;
+                }
+            }
+        }
+
+        public bool Contains(string key)
+        {
+            int index = HashFunction(key);
+            return Table[index] == key;
+        }
+
+        public int IndexOf(string key)
+        {
+            int index = HashFunction(key);
+            return Table[index] == key ? index : -1;
+        }
+    }
+
+    private List<string>[] buckets;
+    private SecondaryTable[] secondaryTables;
+    private Func<string, int> primaryHash;
+
+    public PerfectHashTable(List<string> keys)
+    {
+        int m = keys.Count;
+        buckets = new List<string>[m];
+
+        Random rnd = new Random();
+        int a = rnd.Next(1, 1000);
+        int b = rnd.Next(0, 1000);
+        int p = 10000019;
+
+        primaryHash = s => Math.Abs(((a * s.GetHashCode() + b) % p) % m);
+
+        foreach (var key in keys)
+        {
+            int index = primaryHash(key);
+            if (buckets[index] == null)
+                buckets[index] = new List<string>();
+
+            buckets[index].Add(key);
+        }
+
+        secondaryTables = new SecondaryTable[m];
+
+        for (int i = 0; i < m; i++)
+        {
+            if (buckets[i] != null)
+            {
+                secondaryTables[i] = new SecondaryTable(buckets[i]);
+            }
+        }
+    }
+
+    public bool Contains(string key)
+    {
+        int index = primaryHash(key);
+        return secondaryTables[index]?.Contains(key) ?? false;
+    }
+
+    public void Print()
+    {
+        Console.WriteLine("Primary Table:");
+        for (int i = 0; i < buckets.Length; i++)
+        {
+            Console.Write($"{i}: ");
+            if (buckets[i] != null)
+                Console.WriteLine(string.Join(", ", buckets[i]));
+            else
+                Console.WriteLine("-");
+        }
+    }
+}
