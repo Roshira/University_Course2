@@ -1,0 +1,159 @@
+﻿using System;
+
+
+var treap = new ComplexTreap();
+
+treap.Insert(3, 4);  // |3+4i| = 5
+treap.Insert(1, 2);  // sqrt(5)
+treap.Insert(0, 5);  // sqrt(25)
+treap.Insert(3, -4); // також sqrt(25), a = 3
+
+treap.PrintInOrder();
+
+Console.WriteLine("Пошук (1+2i): " + treap.Search(1, 2));
+treap.Delete(1, 2);
+Console.WriteLine("Після видалення (1+2i):");
+treap.PrintInOrder();
+
+public class ComplexTreap
+{
+    class Node
+    {
+        public int A, B;
+        public int Key => A * A + B * B;
+        public int Priority;
+        public Node Left, Right;
+
+        public Node(int a, int b)
+        {
+            A = a;
+            B = b;
+            Priority = new Random().Next();
+        }
+
+        public override string ToString() => $"({A} + {B}i)";
+    }
+
+    private Node root;
+
+    // Порівняння за модулем, потім за a
+    private int Compare(Node x, Node y)
+    {
+        int modX = x.Key, modY = y.Key;
+        if (modX != modY) return modX.CompareTo(modY);
+        return x.A.CompareTo(y.A);
+    }
+
+    private void Split(Node current, Node item, out Node left, out Node right)
+    {
+        if (current == null)
+        {
+            left = right = null;
+        }
+        else if (Compare(item, current) < 0)
+        {
+            Split(current.Left, item, out left, out current.Left);
+            right = current;
+        }
+        else
+        {
+            Split(current.Right, item, out current.Right, out right);
+            left = current;
+        }
+    }
+
+    private Node Merge(Node left, Node right)
+    {
+        if (left == null) return right;
+        if (right == null) return left;
+
+        if (left.Priority > right.Priority)
+        {
+            left.Right = Merge(left.Right, right);
+            return left;
+        }
+        else
+        {
+            right.Left = Merge(left, right.Left);
+            return right;
+        }
+    }
+
+    public void Insert(int a, int b)
+    {
+        Node newNode = new Node(a, b);
+        Insert(ref root, newNode);
+    }
+
+    private void Insert(ref Node root, Node newNode)
+    {
+        if (root == null)
+        {
+            root = newNode;
+            return;
+        }
+
+        if (newNode.Priority > root.Priority)
+        {
+            Split(root, newNode, out newNode.Left, out newNode.Right);
+            root = newNode;
+        }
+        else if (Compare(newNode, root) < 0)
+        {
+            Insert(ref root.Left, newNode);
+        }
+        else
+        {
+            Insert(ref root.Right, newNode);
+        }
+    }
+
+    public void Delete(int a, int b)
+    {
+        Delete(ref root, new Node(a, b));
+    }
+
+    private void Delete(ref Node root, Node toDelete)
+    {
+        if (root == null) return;
+
+        if (Compare(toDelete, root) == 0)
+        {
+            root = Merge(root.Left, root.Right);
+        }
+        else if (Compare(toDelete, root) < 0)
+        {
+            Delete(ref root.Left, toDelete);
+        }
+        else
+        {
+            Delete(ref root.Right, toDelete);
+        }
+    }
+
+    public bool Search(int a, int b)
+    {
+        Node current = root;
+        Node target = new Node(a, b);
+        while (current != null)
+        {
+            int cmp = Compare(target, current);
+            if (cmp == 0) return true;
+            current = (cmp < 0) ? current.Left : current.Right;
+        }
+        return false;
+    }
+
+    public void PrintInOrder()
+    {
+        PrintInOrder(root);
+    }
+
+    private void PrintInOrder(Node node)
+    {
+        if (node == null) return;
+        PrintInOrder(node.Left);
+        Console.WriteLine($"{node}  | mod² = {node.Key}");
+        PrintInOrder(node.Right);
+    }
+}
